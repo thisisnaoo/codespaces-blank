@@ -20,7 +20,7 @@ INSERT INTO KHOA (MaKhoa, TenKhoa) VALUES
 CREATE TABLE GIAOVIEN (
     MaGiaoVien varchar(10) PRIMARY KEY,
     HoTen nvarchar(50),
-    MaKhoa varchar(10) REFERENCES KHOA(MaKhoa));
+    FOREIGN KEY (MaKhoa) REFERENCES KHOA(MaKhoa));
 
 INSERT INTO GIAOVIEN (MaGiaoVien, HoTen, MaKhoa) VALUES
     ('phungthk',   'Thái Kim Phụng',        'BIT'),
@@ -42,9 +42,10 @@ CREATE TABLE CHUONGTRINH (
     MaChuongTrinh nvarchar(5) PRIMARY KEY, 
     TenChuongTrinh nvarchar(50), 
     MaBacHoc char(2), 
-    MaKhoa varchar(10) REFERENCES KHOA(MaKhoa), 
-    MaGiaoVien_GiamDocCT varchar(10) REFERENCES GIAOVIEN(MaGiaoVien)
-);
+    MaKhoa varchar(10) NOT NULL,
+    MaGiaoVien_GiamDocCT varchar(10) NOT NULL,
+    FOREIGN KEY (MaKhoa) REFERENCES KHOA(MaKhoa),
+    FOREIGN KEY (MaGiaoVien_GiamDocCT) REFERENCES GIAOVIEN(MaGiaoVien));
 
 
 INSERT INTO CHUONGTRINH (MaChuongTrinh, TenChuongTrinh, MaBacHoc, MaKhoa, MaGiaoVien_GiamDocCT) VALUES
@@ -62,7 +63,8 @@ CREATE TABLE MONHOC (
     MaMonHoc nvarchar(10) PRIMARY KEY, 
     TenMonHoc nvarchar(50), 
     SoTinChi int, 
-    MaKhoa varchar(10) FOREIGN KEY);
+    MaKhoa varchar(10) NOT NULL,
+    FOREIGN KEY (MaKhoa) REFERENCES KHOA(MaKhoa));
 
 INSERT INTO MONHOC (MaMonHoc, TenMonHoc, SoTinChi, MaKhoa) VALUES 
     ('ECO501001', 'Kinh tế vi mô',                                               3,  'SOE'),
@@ -209,7 +211,8 @@ CREATE TABLE KHOAHOC (
     TenKhoaHoc nvarchar(50), 
     NamBatDau int, 
     NamKetThuc int, 
-    MaChuongTrinh nvarchar(5));
+    MaChuongTrinh nvarchar(5)) NOT NULL,
+    FOREIGN KEY (MaChuongTrinh) REFERENCES CHUONGTRINH(MaChuongTrinh);
 
 INSERT INTO KHOAHOC (MaKhoaHoc, TenKhoaHoc, NamBatDau, NamKetThuc, MaChuongTrinh) VALUES
     ('DH46BI', 'Hệ thống thông tin kinh doanh Khóa 46',                2020, 2024, 'BISDH'),
@@ -219,11 +222,14 @@ INSERT INTO KHOAHOC (MaKhoaHoc, TenKhoaHoc, NamBatDau, NamKetThuc, MaChuongTrinh
     ('CH32DT', 'Công nghệ thiết kế thông tin và truyền thông Khóa 32', 2022, 2024, 'DT_CH');
 
 CREATE TABLE KHOAHOCMON (
-    MaKhoaHoc nvarchar(10),
-    MaMonHoc nvarchar(5),
-    MaGiaoVien_day varchar(10),
+    MaKhoaHoc nvarchar(10) NOT NULL,
+    MaMonHoc nvarchar(5) NOT NULL,
+    MaGiaoVien_day varchar(10) NOT NULL,
     MaPhong varchar(10),
-    MaThu char(2));
+    MaThu char(2))
+    FOREIGN KEY (MaKhoaHoc) REFERENCES KHOAHOC(MaKhoaHoc),
+    FOREIGN KEY (MaMonHoc) REFERENCES MONHOC(MaMonHoc),
+    FOREIGN KEY (MaGiaoVien_day) REFERENCES GIAOVIEN(MaGiaoVien);
 
 INSERT INTO KHOAHOCMON (MaKhoaHoc, MaMonHoc, MaGiaoVien_day, MaPhong, MaThu) VALUES
     ('DH46BI', 'INF509007', 'hienphan', 'B2.507',  'S4'),
