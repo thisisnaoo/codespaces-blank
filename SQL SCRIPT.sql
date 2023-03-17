@@ -1,8 +1,7 @@
 CREATE TABLE KHOA (
     MaKhoa varchar(10) PRIMARY KEY,
     TenKhoa nvarchar(50));
-INSERT INTO Khoa (MaKhoa, TenKhoa)
-VALUES
+INSERT INTO KHOA (MaKhoa, TenKhoa) VALUES
     ('SOM', 'Khoa Quản trị'),
     ('IBM', 'Khoa Kinh doanh quốc tế - Marketing'),
     ('SOF', 'Khoa Tài chính'),
@@ -21,9 +20,9 @@ VALUES
 CREATE TABLE GIAOVIEN (
     MaGiaoVien varchar(10) PRIMARY KEY,
     HoTen nvarchar(50),
-    MaKhoa varchar(10));
-INSERT INTO GIAOVIEN (MaGiaoVien, HoTen, MaKhoa)
-VALUES
+    MaKhoa varchar(10) REFERENCES KHOA(MaKhoa));
+
+INSERT INTO GIAOVIEN (MaGiaoVien, HoTen, MaKhoa) VALUES
     ('phungthk',   'Thái Kim Phụng',        'BIT'),
     ('hienphan',   'Phan Hiền',             'BIT'),
     ('truong',     'Trương Việt Phương',    'BIT'),
@@ -36,31 +35,36 @@ VALUES
     ('hieubt',     'Bùi Thanh Hiếu',        'BIT'),
     ('thinhdt',    'Đặng Thái Thịnh',       'BIT'),
     ('tuyenhtt',   'Hồ Thị Thanh Tuyến',    'BIT');
+    ('yenhh',      'Hoàng Hải Yến',         'SOB');
+
 
 CREATE TABLE CHUONGTRINH (
     MaChuongTrinh nvarchar(5) PRIMARY KEY, 
     TenChuongTrinh nvarchar(50), 
     MaBacHoc char(2), 
-    MaKhoa varchar(10), 
-    MaGiaoVien_GiamDocCT varchar(10));
+    MaKhoa varchar(10) REFERENCES KHOA(MaKhoa), 
+    MaGiaoVien_GiamDocCT varchar(10) REFERENCES GIAOVIEN(MaGiaoVien)
+);
 
-INSERT INTO CHUONGTRINH (MaChuongTrinh, TenChuongTrinh, MaBacHoc, MaKhoa, MaGiaoVien_GiamDocCT)
-VALUES
-    ('DS', 'Khoa học dữ liệu',                             'DH', 'BIT', 'khanhntv'),
-    ('ER', 'Hệ thống hoạch định nguồn lực doanh nghiệp',   'DH', 'BIT', 'huybx'   ),
-    ('ST', 'Công nghệ Phần mềm',                           'DH', 'BIT', 'truong'  ),
-    ('EC', 'Thương mại điện tử',                           'DH', 'BIT', 'tuannm'  ),
-    ('BI', 'Hệ thống thông tin kinh doanh',                'DH', 'BIT', 'hienphan'),
-    ('DT', 'Công nghệ thiết kế thông tin và truyền thông', 'CH', 'BIT', 'phungthk');
+
+INSERT INTO CHUONGTRINH (MaChuongTrinh, TenChuongTrinh, MaBacHoc, MaKhoa, MaGiaoVien_GiamDocCT) VALUES
+    ('DS_DH', 'Khoa học dữ liệu',                             'DH', 'BIT', 'khanhntv'),
+    ('ERPDH', 'Hệ thống hoạch định nguồn lực doanh nghiệp',   'DH', 'BIT', 'huybx'   ),
+    ('ST_DH', 'Công nghệ Phần mềm',                           'DH', 'BIT', 'truong'  ),
+    ('EC_DH', 'Thương mại điện tử',                           'DH', 'BIT', 'tuannm'  ),
+    ('BISDH', 'Hệ thống thông tin kinh doanh',                'DH', 'BIT', 'hienphan'),
+    ('DT_CH', 'Công nghệ thiết kế thông tin và truyền thông', 'CH', 'BIT', 'phungthk');
+    ('FB_DH', 'Tài chính ngân hàng',                          'CH', 'BIT', 'phungthk');
+    ('DT_CH', 'Tài chính ngân hàng',                          'CH', 'BIT', 'phungthk');
+
 
 CREATE TABLE MONHOC (
-    MaMonHoc nvarchar(5) PRIMARY KEY, 
+    MaMonHoc nvarchar(10) PRIMARY KEY, 
     TenMonHoc nvarchar(50), 
     SoTinChi int, 
-    MaKhoa varchar(10));
+    MaKhoa varchar(10) FOREIGN KEY);
 
-INSERT INTO MONHOC (MaMonHoc, TenMonHoc, SoTinChi, MaKhoa)
-VALUES 
+INSERT INTO MONHOC (MaMonHoc, TenMonHoc, SoTinChi, MaKhoa) VALUES 
     ('ECO501001', 'Kinh tế vi mô',                                               3,  'SOE'),
     ('ENG513001', 'Tiếng Anh P1',                                                4,  'BIT'),
     ('LAW511001', 'Luật kinh doanh',                                             3,  'BIT'),
@@ -110,3 +114,122 @@ VALUES
     ('INF509033', 'Khóa luận tốt nghiệp - BI',                                   10, 'BIT'),
     ('INF509072', 'Học kỳ doanh nghiệp - BI',                                    10, 'BIT');
 
+CREATE TABLE CHUONGTRINHMONHOC (
+  MaChuongTrinh nvarchar(5) NOT NULL,
+  MaMonHoc nvarchar(10) NOT NULL,
+  HocKy int,
+  PRIMARY KEY (MaChuongTrinh, MaMonHoc),
+  FOREIGN KEY (MaChuongTrinh) REFERENCES CHUONGTRINH(MaChuongTrinh),
+  FOREIGN KEY (MaMonHoc) REFERENCES MONHOC(MaMonHoc));
+
+
+
+INSERT INTO CHUONGTRINHMONHOC (MaChuongTrinh, MaMonHoc, HocKy) VALUES 
+    ('BISDH', 'ECO501001', 1),
+    ('EC_DH', 'ECO501001', 1),
+    ('BISDH', 'ENG513001', 1),
+    ('EC_DH', 'ENG513001', 1),
+    ('ERPDH', 'PHI510023', 1),
+    ('ST_DH', 'ACC507001', 2),
+    ('DS_DH', 'ECO501002', 2),
+    ('BISDH', 'ENG513002', 2),
+    ('EC_DH', 'POL510024', 2),
+    ('BISDH', 'POL510024', 2),
+    ('BISDH', 'POL510025', 2),
+    ('BISDH', 'STA508005', 2),
+    ('BISDH', 'ENG513003', 3),
+    ('BISDH', 'HCM510004', 3),
+    ('EC_DH', 'INF509003', 3),
+    ('EC_DH', 'INF509008', 3),
+    ('EC_DH', 'INF509011', 3),
+    ('EC_DH', 'MAN502001', 3),
+    ('EC_DH', 'ENG513004', 4),
+    ('EC_DH', 'HIS510026', 4),
+    ('BISDH', 'INF509004', 4),
+    ('BISDH', 'INF509005', 4),
+    ('BISDH', 'INF509006', 4),
+    ('BISDH', 'INF509009', 4),
+    ('BISDH', 'MAR503001', 4),
+    ('BISDH', 'MAT508010', 4),
+    ('EC_DH', 'BUS503095', 5),
+    ('BISDH', 'BUS503095', 5),
+    ('BISDH', 'INF509007', 5),
+    ('BISDH', 'INF509010', 5),
+    ('BISDH', 'INF509012', 5),
+    ('EC_DH', 'INF509013', 5),
+    ('BISDH', 'INF509013', 5),
+    ('BISDH', 'INF509017', 5),
+    ('BISDH', 'ACC507011', 5),
+    ('BISDH', 'BUS503048', 5),
+    ('BISDH', 'INF509018', 5),
+    ('BISDH', 'INF509019', 6),
+    ('BISDH', 'BUS533002', 6),
+    ('BISDH', 'INF509014', 6),
+    ('BISDH', 'INF509015', 6),
+    ('BISDH', 'INF509016', 6),
+    ('BISDH', 'INF509020', 6),
+    ('BISDH', 'INF509021', 6),
+    ('BISDH', 'INF509022', 6),
+    ('BISDH', 'INF509023', 6),
+    ('EC_DH', 'MAN502004', 6),
+    ('EC_DH', 'MAR503018', 6),
+    ('BISDH', 'INF509033', 7),
+    ('BISDH', 'INF509072', 7);
+
+CREATE TABLE DAMNHIEMMON (
+    MaChuongTrinh nvarchar(5) NOT NULL,
+    MaMonHoc nvarchar(10) NOT NULL,
+    MaGiaoVien varchar(10) NOT NULL,
+    CoLaDamNhiemChinh int,
+    PRIMARY KEY (MaChuongTrinh, MaMonHoc, MaGiaoVien),
+    FOREIGN KEY (MaChuongTrinh) REFERENCES CHUONGTRINH(MaChuongTrinh),
+    FOREIGN KEY (MaMonHoc) REFERENCES MONHOC(MaMonHoc),
+    FOREIGN KEY (MaGiaoVien) REFERENCES GIAOVIEN(MaGiaoVien));
+
+
+INSERT INTO DAMNHIEMMON (MaChuongTrinh, MaMonHoc, MaGiaoVien, CoLaDamNhiemChinh) VALUES 
+    ('BISDH', 'INF509007', 'hvduc',    0),
+    ('BISDH', 'INF509007', 'hienphan', 0),
+    ('BISDH', 'INF509007', 'truong',   1),
+    ('BISDH', 'INF509007', 'tena',     0),
+    ('BISDH', 'INF509010', 'tena',     1),
+    ('BISDH', 'INF509010', 'huybx',    0),
+    ('BISDH', 'INF509010', 'truong',   0),
+    ('BISDH', 'INF509010', 'hungngq',  0),
+    ('BISDH', 'INF509010', 'hienphan', 0),
+    ('EC_DH', 'INF509013', 'phungthk', 1),
+    ('EC_DH', 'INF509013', 'tuannm',   0),
+    ('BISDH', 'INF509013', 'phungthk', 1),
+    ('BISDH', 'INF509013', 'hungngq',  0),
+    ('BISDH', 'INF509018', 'hienphan', 1),
+    ('BISDH', 'INF509018', 'tuyenhtt', 0);
+
+CREATE TABLE KHOAHOC (
+    MaKhoaHoc nvarchar(10) PRIMARY KEY, 
+    TenKhoaHoc nvarchar(50), 
+    NamBatDau int, 
+    NamKetThuc int, 
+    MaChuongTrinh nvarchar(5));
+
+INSERT INTO KHOAHOC (MaKhoaHoc, TenKhoaHoc, NamBatDau, NamKetThuc, MaChuongTrinh) VALUES
+    ('DH46BI', 'Hệ thống thông tin kinh doanh Khóa 46',                2020, 2024, 'BISDH'),
+    ('DH47BI', 'Hệ thống thông tin kinh doanh Khóa 47',                2021, 2025, 'BISDH'),
+    ('DH46EC', 'Thương mại điện tử Khóa 46',                           2020, 2024, 'EC_DH'),
+    ('DH46ST', 'Công nghệ Phần mềm Khóa 46',                           2020, 2024, 'ST_DH'),
+    ('CH32DT', 'Công nghệ thiết kế thông tin và truyền thông Khóa 32', 2022, 2024, 'DT_CH');
+
+CREATE TABLE KHOAHOCMON (
+    MaKhoaHoc nvarchar(10),
+    MaMonHoc nvarchar(5),
+    MaGiaoVien_day varchar(10),
+    MaPhong varchar(10),
+    MaThu char(2));
+
+INSERT INTO KHOAHOCMON (MaKhoaHoc, MaMonHoc, MaGiaoVien_day, MaPhong, MaThu) VALUES
+    ('DH46BI', 'INF509007', 'hienphan', 'B2.507',  'S4'),
+    ('DH46BI', 'INF509007', 'tena',     'B2.507',  'C4'),
+    ('DH46BI', 'INF509010', 'tena',     'B2.508',  'S4'),
+    ('DH46BI', 'INF509013', 'phungthk', 'A.203',   'S2'),
+    ('DH46BI', 'INF509018', 'hienphan', 'B1.1103', 'C6'),
+    ('DH47BI', 'INF509010', 'huybx',    'N1.206',  'S4'),
+    ('DH46EC', 'INF509013', 'tuannm',   'B2.105',  'S4');
