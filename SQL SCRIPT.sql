@@ -211,8 +211,8 @@ CREATE TABLE KHOAHOC (
     TenKhoaHoc nvarchar(50), 
     NamBatDau int, 
     NamKetThuc int, 
-    MaChuongTrinh nvarchar(5)) NOT NULL,
-    FOREIGN KEY (MaChuongTrinh) REFERENCES CHUONGTRINH(MaChuongTrinh);
+    MaChuongTrinh nvarchar(5) NOT NULL,
+    FOREIGN KEY (MaChuongTrinh) REFERENCES CHUONGTRINH(MaChuongTrinh));
 
 INSERT INTO KHOAHOC (MaKhoaHoc, TenKhoaHoc, NamBatDau, NamKetThuc, MaChuongTrinh) VALUES
     ('DH46BI', 'Hệ thống thông tin kinh doanh Khóa 46',                2020, 2024, 'BISDH'),
@@ -226,10 +226,10 @@ CREATE TABLE KHOAHOCMON (
     MaMonHoc nvarchar(5) NOT NULL,
     MaGiaoVien_day varchar(10) NOT NULL,
     MaPhong varchar(10),
-    MaThu char(2))
+    MaThu char(2),
     FOREIGN KEY (MaKhoaHoc) REFERENCES KHOAHOC(MaKhoaHoc),
     FOREIGN KEY (MaMonHoc) REFERENCES MONHOC(MaMonHoc),
-    FOREIGN KEY (MaGiaoVien_day) REFERENCES GIAOVIEN(MaGiaoVien);
+    FOREIGN KEY (MaGiaoVien_day) REFERENCES GIAOVIEN(MaGiaoVien));
 
 INSERT INTO KHOAHOCMON (MaKhoaHoc, MaMonHoc, MaGiaoVien_day, MaPhong, MaThu) VALUES
     ('DH46BI', 'INF509007', 'hienphan', 'B2.507',  'S4'),
