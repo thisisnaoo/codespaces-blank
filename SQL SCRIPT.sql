@@ -56,7 +56,7 @@ INSERT INTO CHUONGTRINH (MaChuongTrinh, TenChuongTrinh, MaBacHoc, MaKhoa, MaGiao
     ('BISDH', 'Hệ thống thông tin kinh doanh',                'DH', 'BIT', 'hienphan'),
     ('DT_CH', 'Công nghệ thiết kế thông tin và truyền thông', 'CH', 'BIT', 'phungthk');
     ('FB_DH', 'Tài chính ngân hàng',                          'CH', 'BIT', 'phungthk');
-    ('DT_CH', 'Tài chính ngân hàng',                          'CH', 'BIT', 'phungthk');
+    ('FB_CH', 'Tài chính ngân hàng',                          'CH', 'BIT', 'phungthk');
 
 
 CREATE TABLE MONHOC (
@@ -94,7 +94,6 @@ INSERT INTO MONHOC (MaMonHoc, TenMonHoc, SoTinChi, MaKhoa) VALUES
     ('MAT508010', 'Phân tích dữ liệu',                                           3,  'SEM'),
     ('BUS503095', 'Kỹ năng mềm',                                                 2,  'SOM'),
     ('INF509007', 'Cấu trúc dữ liệu và giải thuật',                              3,  'BIT'),
-    ('INF509010', 'Phân tích thiết kế hệ thống',                                 3,  'BIT'),
     ('INF509010', 'Phân tích thiết kế hệ thống',                                 3,  'BIT'),
     ('INF509012', 'Công nghệ phần mềm',                                          3,  'BIT'),
     ('INF509013', 'Thương mại điện tử',                                          3,  'BIT'),
