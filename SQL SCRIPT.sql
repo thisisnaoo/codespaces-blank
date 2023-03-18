@@ -2,24 +2,25 @@ CREATE TABLE KHOA (
     MaKhoa varchar(10) PRIMARY KEY,
     TenKhoa nvarchar(50));
 INSERT INTO KHOA (MaKhoa, TenKhoa) VALUES
-    ('SOM', 'Khoa Quản trị'),
-    ('IBM', 'Khoa Kinh doanh quốc tế - Marketing'),
-    ('SOF', 'Khoa Tài chính'),
-    ('SOB', 'Khoa Ngân hàng'),
-    ('SOA', 'Khoa Kế toán'),
-    ('VDL', 'Khoa Du lịch'),
-    ('SOE', 'Khoa Kinh tế'),
-    ('SPF', 'Khoa Tài chính công'),
-    ('LAW', 'Khoa Luật'),
-    ('SOG', 'Khoa Quản lý nhà nước'),
-    ('SEM', 'Khoa Toán - Thống kê'),
-    ('BIT', 'Khoa Công nghệ thông tin kinh doanh'),
-    ('SFL', 'Khoa Ngoại ngữ'),
-    ('LLC', 'Khoa Lý luận chính trị');
+    ('SOM', 'Quản trị'),
+    ('IBM', 'Kinh doanh quốc tế - Marketing'),
+    ('SOF', 'Tài chính'),
+    ('SOB', 'Ngân hàng'),
+    ('SOA', 'Kế toán'),
+    ('VDL', 'Du lịch'),
+    ('SOE', 'Kinh tế'),
+    ('SPF', 'Tài chính công'),
+    ('LAW', 'Luật'),
+    ('SOG', 'Quản lý nhà nước'),
+    ('SEM', 'Toán - Thống kê'),
+    ('BIT', 'Công nghệ thông tin kinh doanh'),
+    ('SFL', 'Ngoại ngữ'),
+    ('LLC', 'Lý luận chính trị');
 
 CREATE TABLE GIAOVIEN (
     MaGiaoVien varchar(10) PRIMARY KEY,
     HoTen nvarchar(50),
+	MaKhoa varchar(10) NOT NULL,
     FOREIGN KEY (MaKhoa) REFERENCES KHOA(MaKhoa));
 
 INSERT INTO GIAOVIEN (MaGiaoVien, HoTen, MaKhoa) VALUES
@@ -34,7 +35,7 @@ INSERT INTO GIAOVIEN (MaGiaoVien, HoTen, MaKhoa) VALUES
     ('khanhntv',   'Ngô Tấn Vũ Khanh',      'BIT'),
     ('hieubt',     'Bùi Thanh Hiếu',        'BIT'),
     ('thinhdt',    'Đặng Thái Thịnh',       'BIT'),
-    ('tuyenhtt',   'Hồ Thị Thanh Tuyến',    'BIT');
+    ('tuyenhtt',   'Hồ Thị Thanh Tuyến',    'BIT'),
     ('yenhh',      'Hoàng Hải Yến',         'SOB');
 
 
@@ -55,8 +56,8 @@ INSERT INTO CHUONGTRINH (MaChuongTrinh, TenChuongTrinh, MaBacHoc, MaKhoa, MaGiao
     ('EC_DH', 'Thương mại điện tử',                           'DH', 'BIT', 'tuannm'  ),
     ('BISDH', 'Hệ thống thông tin kinh doanh',                'DH', 'BIT', 'hienphan'),
     ('DT_CH', 'Công nghệ thiết kế thông tin và truyền thông', 'CH', 'BIT', 'phungthk');
-    ('FB_DH', 'Tài chính ngân hàng',                          'CH', 'BIT', 'phungthk');
-    ('FB_CH', 'Tài chính ngân hàng',                          'CH', 'BIT', 'phungthk');
+    ('FB_DH', 'Tài chính ngân hàng',                          'CH', 'SOB', 'yenhh'   );
+    ('FB_CH', 'Tài chính ngân hàng',                          'CH', 'SOB', 'yenhh'   );
 
 
 CREATE TABLE MONHOC (
@@ -97,7 +98,7 @@ INSERT INTO MONHOC (MaMonHoc, TenMonHoc, SoTinChi, MaKhoa) VALUES
     ('INF509010', 'Phân tích thiết kế hệ thống',                                 3,  'BIT'),
     ('INF509012', 'Công nghệ phần mềm',                                          3,  'BIT'),
     ('INF509013', 'Thương mại điện tử',                                          3,  'BIT'),
-    ('INF509017', 'Giới thiệu hệ thống hoạch định nguồn lực doanh nghiệp (ERP)', 3,  'BIT'),
+    ('INF509017', 'Giới thiệu (ERP)',                                            3,  'BIT'),
     ('ACC507011', 'Kế toán quản trị',                                            3,  'SOA'),
     ('BUS503048', 'Quản trị chuỗi cung ứng',                                     3,  'SOM'),
     ('INF509018', 'Cơ sở dữ liệu nâng cao',                                      3,  'BIT'),
@@ -122,7 +123,6 @@ CREATE TABLE CHUONGTRINHMONHOC (
   PRIMARY KEY (MaChuongTrinh, MaMonHoc),
   FOREIGN KEY (MaChuongTrinh) REFERENCES CHUONGTRINH(MaChuongTrinh),
   FOREIGN KEY (MaMonHoc) REFERENCES MONHOC(MaMonHoc));
-
 
 
 INSERT INTO CHUONGTRINHMONHOC (MaChuongTrinh, MaMonHoc, HocKy) VALUES 
@@ -187,7 +187,6 @@ CREATE TABLE DAMNHIEMMON (
     FOREIGN KEY (MaMonHoc) REFERENCES MONHOC(MaMonHoc),
     FOREIGN KEY (MaGiaoVien) REFERENCES GIAOVIEN(MaGiaoVien));
 
-
 INSERT INTO DAMNHIEMMON (MaChuongTrinh, MaMonHoc, MaGiaoVien, CoLaDamNhiemChinh) VALUES 
     ('BISDH', 'INF509007', 'hvduc',    0),
     ('BISDH', 'INF509007', 'hienphan', 0),
@@ -218,11 +217,11 @@ INSERT INTO KHOAHOC (MaKhoaHoc, TenKhoaHoc, NamBatDau, NamKetThuc, MaChuongTrinh
     ('DH47BI', 'Hệ thống thông tin kinh doanh Khóa 47',                2021, 2025, 'BISDH'),
     ('DH46EC', 'Thương mại điện tử Khóa 46',                           2020, 2024, 'EC_DH'),
     ('DH46ST', 'Công nghệ Phần mềm Khóa 46',                           2020, 2024, 'ST_DH'),
-    ('CH32DT', 'Công nghệ thiết kế thông tin và truyền thông Khóa 32', 2022, 2024, 'DT_CH');
+    ('CH32DT', 'CN thiết kế thông tin và truyền thông Khóa 32',        2022, 2024, 'DT_CH');
 
 CREATE TABLE KHOAHOCMON (
     MaKhoaHoc nvarchar(10) NOT NULL,
-    MaMonHoc nvarchar(5) NOT NULL,
+    MaMonHoc nvarchar(10) NOT NULL,
     MaGiaoVien_day varchar(10) NOT NULL,
     MaPhong varchar(10),
     MaThu char(2),
