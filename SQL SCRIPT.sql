@@ -60,7 +60,6 @@ INSERT INTO CHUONGTRINH (MaChuongTrinh, TenChuongTrinh, MaBacHoc, MaKhoa, MaGiao
     ('FB_CH', N'Tài chính ngân hàng CH',                          'CH', 'SOB', 'yenhh'   );
     ('MR_DH', N'Marketing ĐH',                                    'DH', 'IBM', 'minhd'   );
 
-
 CREATE TABLE MONHOC (
     MaMonHoc nvarchar(10) PRIMARY KEY, 
     TenMonHoc nvarchar(50), 
