@@ -58,6 +58,7 @@ INSERT INTO CHUONGTRINH (MaChuongTrinh, TenChuongTrinh, MaBacHoc, MaKhoa, MaGiao
     ('DT_CH', N'Công nghệ thiết kế thông tin và truyền thông CH', 'CH', 'BIT', 'phungthk'),
     ('FB_DH', N'Tài chính ngân hàng ĐH',                          'CH', 'SOB', 'yenhh'   ),
     ('FB_CH', N'Tài chính ngân hàng CH',                          'CH', 'SOB', 'yenhh'   );
+    ('MR_DH', N'Marketing ĐH',                                    'DH', 'IBM', 'minhd'   );
 
 
 CREATE TABLE MONHOC (
@@ -69,7 +70,7 @@ CREATE TABLE MONHOC (
 
 INSERT INTO MONHOC (MaMonHoc, TenMonHoc, SoTinChi, MaKhoa) VALUES 
     ('ECO501001', N'Kinh tế vi mô',                                               3,  'SOE'),
-    ('ENG513001', N'Tiếng Anh P1',                                                4,  'BIT'),
+    ('ENG513001', N'Tiếng Anh P1',                                                4,  'SFL'),
     ('LAW511001', N'Luật kinh doanh',                                             3,  'BIT'),
     ('MAT508001', N'Toán dành cho kinh tế và quản trị',                           3,  'BIT'),
     ('PHI510023', N'Triết học Mác LêNin',                                         3,  'BIT'),
@@ -237,6 +238,7 @@ INSERT INTO KHOAHOC (MaKhoaHoc, TenKhoaHoc, NamBatDau, NamKetThuc, MaChuongTrinh
     ('CH32DT', N'CN thiết kế thông tin và truyền thông Khóa 32',        2022, 2024, 'DT_CH');
 
 CREATE TABLE KHOAHOCMON (
+	ID int IDENTITY(1,1) PRIMARY KEY,
     MaKhoaHoc nvarchar(10) NOT NULL,
     MaMonHoc nvarchar(10) NOT NULL,
     MaGiaoVien_day varchar(10) NOT NULL,
