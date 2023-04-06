@@ -37,6 +37,24 @@ INSERT INTO GIAOVIEN (MaGiaoVien, HoTen, MaKhoa) VALUES
     ('thinhdt',    N'Đặng Thái Thịnh',       'BIT'),
     ('tuyenhtt',   N'Hồ Thị Thanh Tuyến',    'BIT'),
     ('yenhh',      N'Hoàng Hải Yến',         'SOB');
+    ('sangnv',     N'Nguyễn Văn Sáng',       'LLC'),
+    ('trainv',     N'Nguyễn Văn Trãi',       'SEM'),
+    ('hanhkt',     N'Nguyễn Thị Hạnh',       'SFL'),
+    ('hongltc',    N'Lê Thị Cẩm Hồng',       'SOA'),
+    ('ainhan',     N'Lê Thị Ái Nhân',        'LLC'),
+    ('chamng',     N'Nguyễn Thị Bích Châm',  'SOM'),
+    ('minhd',      N'Đinh Tiên Minh',        'IBM'),
+    ('minhn',      N'Nguyễn Thị Hồng Minh',  'IBM'),
+    ('hongtcdn',   N'Đinh Thị Thu Hồng',     'SOF'),
+    ('hailyth',    N'Trần Thị Hải Lý',       'SOF'),
+    ('khanhnam',   N'Phạm Khánh Nam',        'SOE'),
+    ('thangvt',    N'Võ Tất Thắng',          'SOE'),
+    ('gialuat',    N'Diệp Gia Luật',         'SPF'),
+    ('kimquyen',   N'Nguyễn Kim Quyến',      'SPF'),
+    ('nguyend',    N'Dương Kim Thế Nguyên',  'LAW'),
+    ('anhnt',      N'Nguyễn Thị Anh',        'LAW'),
+    ('khai',       N'Đinh Công Khải',        'SOG'),
+    ('dunv',       N'Nguyễn Văn Dư',         'SOG')
 
 
 CREATE TABLE CHUONGTRINH (
@@ -58,7 +76,8 @@ INSERT INTO CHUONGTRINH (MaChuongTrinh, TenChuongTrinh, MaBacHoc, MaKhoa, MaGiao
     ('DT_CH', N'Công nghệ thiết kế thông tin và truyền thông CH', 'CH', 'BIT', 'phungthk'),
     ('FB_DH', N'Tài chính ngân hàng ĐH',                          'CH', 'SOB', 'yenhh'   ),
     ('FB_CH', N'Tài chính ngân hàng CH',                          'CH', 'SOB', 'yenhh'   );
-    ('MR_DH', N'Marketing ĐH',                                    'DH', 'IBM', 'minhd'   );
+    ('MKTDH', N'Marketing ĐH',                                    'DH', 'IBM', 'minhd'   );
+    ('QLCDH', N'Quản lý công ĐH',                                 'DH', 'SOG', 'khai'    );
 
 CREATE TABLE MONHOC (
     MaMonHoc nvarchar(10) PRIMARY KEY, 
